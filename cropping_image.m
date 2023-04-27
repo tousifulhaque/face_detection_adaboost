@@ -11,7 +11,7 @@ non_face_training_list = dir('data/training_nonfaces/*.jpg');
 s = filesep;
 % size_list = size(face_training,1);
 file_path = [face_training(1).folder ,s, face_training(1).name];
-img = imread(file_path);
+img = read_gray(file_path);
 train_face_size = size(img,1);
 
 number_of_random_points = 50;
@@ -19,7 +19,7 @@ non_face_training = zeros(train_face_size,train_face_size,size(non_face_training
 non_face_image_index = 1;
 for i = 1 : size(non_face_training_list,1)
     file_path = [non_face_training_list(i).folder ,s, non_face_training_list(i).name];
-    img = imread(file_path);
+    img = read_gray(file_path);
     row_range = size(img,1) - train_face_size;
     col_range = size(img,2) - train_face_size;
 %     disp([row_range col_range]);
@@ -30,6 +30,6 @@ for i = 1 : size(non_face_training_list,1)
         non_face_image_index = non_face_image_index + 1;
     end
 end
-save('training_nonface.mat', "non_face_training")
+save('training_nonface.mat', "non_face_training");
 %%
 end
