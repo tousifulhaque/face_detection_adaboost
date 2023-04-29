@@ -41,6 +41,14 @@ end
 % adaboost
 best_classifiers = AdaBoost(responses, labels, 15);
 
+%%
+
+% testing
+
+test_data = cat(3, )
+
+%%
+
 
 
 

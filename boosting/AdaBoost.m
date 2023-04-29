@@ -35,7 +35,7 @@ for round = 1:rounds
     thresholded = double(boosted_responses > 0);
     thresholded(thresholded == 0) = -1;
     error = mean(thresholded ~= labels);
-    disp([round error best_error best_classifier alpha threshold]);
+    disp([round error]);
 end
 
 
