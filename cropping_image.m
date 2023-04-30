@@ -6,7 +6,7 @@ function non_face_training = cropping_image()
 %%
 face_training = dir('data/training_faces/*.bmp');
 non_face_training_list = dir('data/training_nonfaces/*.jpg');
-crop_ratio = 3/4;
+crop_ratio = 1;
 
 s = filesep;
 % size_list = size(face_training,1);
@@ -26,7 +26,7 @@ for i = 1 : size(non_face_training_list,1)
     row_points = randi([1 row_range], number_of_random_points);
     col_points = randi([1 col_range], number_of_random_points);
     for j = 1 : number_of_random_points
-        non_face_training(:,:,non_face_image_index) = img(row_points(j):row_points(j)+74,col_points(j):col_points(j)+74);
+        non_face_training(:,:,non_face_image_index) = img(row_points(j):row_points(j)+99,col_points(j):col_points(j)+99);
         non_face_image_index = non_face_image_index + 1;
     end
 end

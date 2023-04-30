@@ -58,7 +58,7 @@ wcols = 300;
 % Counting the skin pixels without the use of integral image
 tic;
 window = scaled_skin_pixels(top_offset:top_offset+wrows-1, left_offset:left_offset+wcols-1);
-sum_skin_pixels = sum(sum(window))
+sum_skin_pixels = sum(sum(window));
 toc;
 
 %%
@@ -69,7 +69,7 @@ area2 = scaled_skin_integral(top_offset + wrows - 1, left_offset + wcols - 1);
 area3 = scaled_skin_integral(top_offset + wrows - 1, left_offset - 1);
 area4 = scaled_skin_integral(top_offset - 1, left_offset + wcols - 1);
 
-result = area1 + area2 - area3 - area4
+result = area1 + area2 - area3 - area4;
 toc;
 
 % Note: counting skin pixels using the integral skin image should be faster

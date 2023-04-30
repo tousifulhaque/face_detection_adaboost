@@ -15,8 +15,8 @@ function [max_responses, max_scales] = ...
 max_responses = ones(size(image)) * -10;
 max_scales = zeros(size(image));
 
-for scale = scales;
-    scale
+for scale = scales
+%     scaler
     tic;
     scaled_image = imresize(image, 1/scale, 'bilinear');
     temp_result = apply_classifier_aux(scaled_image, classifiers, ...

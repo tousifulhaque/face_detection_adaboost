@@ -1,5 +1,5 @@
-function face_images = make_face_mat(path)
-crop_ratio  = 3/4;
+function face_images = make_face_mat(path, mat_file_name)
+crop_ratio  = 1;
 s = filesep;
 pattern = [path , s , '*.bmp'];
 face_training = dir(pattern);
@@ -17,7 +17,7 @@ for i = 1:total_face
      face_images(:,:,i) = img(row_center-upper+1 : row_center+lower, col_center - upper+1 : col_center + lower); 
 end
 
-save('training_face.mat', 'face_images');
+save(mat_file_name, 'face_images');
 end
 
 
