@@ -17,7 +17,6 @@ max_scales = zeros(size(image));
 
 for scale = scales
 %     scaler
-    tic;
     scaled_image = imresize(image, 1/scale, 'bilinear');
     temp_result = apply_classifier_aux(scaled_image, classifiers, ...
                                        weak_classifiers, face_size);
@@ -26,5 +25,4 @@ for scale = scales
     higher_maxes = (temp_result > max_responses);
     max_scales(higher_maxes) = scale;
     max_responses(higher_maxes) = temp_result(higher_maxes);
-    toc
 end
