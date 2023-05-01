@@ -30,7 +30,7 @@ selected_windows_center = [];
             col = horizontal + round(face_col/2);
             responses(row, col) = responses(row, col) + response;
         end
-        if response > 1
+        if response > 0
             selected_windows = [selected_windows; windows(i, :)];
 
         end
