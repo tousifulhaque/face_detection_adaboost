@@ -1,4 +1,4 @@
-function score = adaboost_face_classification()
+pfunction score = adaboost_face_classification()
 %%
 face = load('training_face.mat').face_images;
 non_face = load('training_nonface.mat').non_face_training;
@@ -132,9 +132,10 @@ for photo_no = 20
     color_face_photo = imread(face_photo_path);
     grey_face_photo = read_gray(face_photo_path);
 %     imshow(grey_face_photo,[]);
-    result_number = 10;
-    [~, boxes] = boosted_detector_demo(grey_face_photo, .5:.2:2, best_classifiers, ...
-                         weak_classifiers, [face_vertical, face_horizontal], result_number);
+    result_number = 5;
+%     [~, boxes] = boosted_detector_demo(grey_face_photo, .5:.2:2, best_classifiers, ...
+%                          weak_classifiers, [face_vertical, face_horizontal], result_number);
+    boxes = cascading(best_classifiers, [100,100], scales, face_photo_path, num_boxes);
 
     
 %     for number = 1:result_number
@@ -240,8 +241,12 @@ for skin_threshold = 0.6
             color_face_photo = imread(face_photo_path);
             grey_face_photo = read_gray(face_photo_path);
             result_number = 10;
-            [~, boxes] = boosted_detector_demo(grey_face_photo, .5:.2:2, best_classifiers, ...
-                                 weak_classifiers, [face_vertical, face_horizontal], result_number);
+            scales = .5:.2:2;
+%             [~, boxes] = boosted_detector_demo(grey_face_photo, .5:.2:2, best_classifiers, ...
+%                                  weak_classifiers, [face_vertical, face_horizontal], result_number);
+
+            boxes = cascading(best_classifiers, [100,100], scales, face_photo_path, result_number);
+
             
             % Apply skin detection
             for box_no = 1:result_number
