@@ -19,6 +19,8 @@ non_face = load('training_nonface.mat').nonface_images;
 face_vertical = size(face,1);
 face_horizontal = size(face, 2);
 
+face_size = [face_vertical, face_horizontal];
+
 %generating weak classifiers
 number = 2000;
 weak_classifiers = cell(1, number);
@@ -108,4 +110,5 @@ end
 
 save('best_classifiers.mat', 'best_classifiers');
 save('weak_classifiers.mat', 'weak_classifiers');
+save('face_size.mat','face_size' );
 

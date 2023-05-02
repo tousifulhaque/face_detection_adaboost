@@ -3,11 +3,9 @@ face_row = face_size(1);
 face_col= face_size(2);
 responses = zeros(vertical_size, horizontal_size);
 classifier_number = size(boosted, 1);
-% give the window to this code and 
 all_windows = windows;
 selected_windows = [];
 selected_windows_center = [];
-
 
     for i = 1:size(windows, 1)
         response = 0 ;
@@ -30,7 +28,7 @@ selected_windows_center = [];
             col = horizontal + round(face_col/2);
             responses(row, col) = responses(row, col) + response;
         end
-        if response > 0
+        if response > 1
             selected_windows = [selected_windows; windows(i, :)];
 
         end

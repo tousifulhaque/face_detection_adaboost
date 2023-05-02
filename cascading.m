@@ -1,6 +1,6 @@
 %% cascading
 % making groups out of the best classifer
-function boxes = cascading(best_classifiers, weak_classifiers, face_size, scales, img_path, num_boxes) 
+function boxes = cascading(best_classifiers, weak_classifiers, face_size, scales, img_path) 
 tic
 
 group_1 = best_classifiers(1:7, :);
@@ -50,18 +50,19 @@ for scale = scales
     max_responses(higher_maxes) = temp_result(higher_maxes);
 end
 
+num_boxes = 10;
 boxes = detection_boxes(image, zeros(face_size), max_responses, ...
                          max_scales, num_boxes);
 
-% result = image;
-% 
-% for number = 1:5
-%     result = draw_rectangle1(result, boxes(number, 1), boxes(number, 2), ...
-%                              boxes(number, 3), boxes(number, 4));
+result = image;
+
+for number = 1:num_boxes
+    result = draw_rectangle1(result, boxes(number, 1), boxes(number, 2), ...
+                             boxes(number, 3), boxes(number, 4));
 
 toc
-% figure(1);
-% imshow(result,[]);
+figure(1);
+imshow(result,[]);
 end
 
 
