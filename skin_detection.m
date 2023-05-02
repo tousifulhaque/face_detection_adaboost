@@ -1,4 +1,4 @@
-function score = adaboost_face_classification()
+% function score = adaboost_face_classification();
 %%
 % face = load('training_face.mat').face_images;
 % non_face = load('training_nonface.mat').non_face_training;
@@ -227,15 +227,19 @@ fclose(fid);
 %% Calculating whole aray
 negative_histogram = read_double_image('negatives.bin');
 positive_histogram = read_double_image('positives.bin');
+% face_vertical = 50;
+% face_horizontal = 50;
 % for skin_threshold = 0.1:0.1:1
 % print(.05:.02:1.5)
 % disp([numel(0.5:0.2:1) numel(.05:.02:.15)]);
-error_rates = zeros(numel(0.5:0.2:1)*numel(.05:.02:.15),3);
+skin_threshold_range = 0.6:0.1:0.6;
+skin_percentage_range = 0.09:0.01:0.12;
+% error_rates = zeros(numel(0.5:0.2:1)*numel(.05:.02:.15),3);
 % size(error_rates)
 row_counter = 1;
-for skin_threshold = 0.6
+for skin_threshold = skin_threshold_range
 %     for skin_percentage = .05:.02:.15
-    for skin_percentage = 0.09
+    for skin_percentage = skin_percentage_range
         box_accepted = zeros(size(face_photos));
         for photo_no = 1:size(face_photos)
 %         for photo_no = 20
@@ -243,7 +247,7 @@ for skin_threshold = 0.6
             color_face_photo = imread(face_photo_path);
             grey_face_photo = read_gray(face_photo_path);
             result_number = 10;
-            scales = .5:.05:1.5;
+            scales = .2:.2:2;
 %             [~, boxes] = boosted_detector_demo(grey_face_photo, .5:.2:2, best_classifiers, ...
 %                                  weak_classifiers, [face_vertical, face_horizontal], result_number);
 
@@ -264,8 +268,8 @@ for skin_threshold = 0.6
                 image = imresize(color_face_photo(boxes(box_no, 1): boxes(box_no, 2), ...
                                     boxes(box_no, 3): boxes(box_no, 4), :), [face_vertical,face_horizontal]);
                 size(image);
-                skin_detection = detect_skin(image, positive_histogram,  negative_histogram);
-                skin_pixels = skin_detection > skin_threshold;
+                skin_detection_win = detect_skin(image, positive_histogram,  negative_histogram);
+                skin_pixels = skin_detection_win > skin_threshold;
         %         test_sum = sum(sum(skin_pixels(skin_pixels==1)))
                 if sum(sum(skin_pixels(skin_pixels==1))) / (size(skin_pixels,1)*size(skin_pixels,2)) > skin_percentage
                     box_accepted(photo_no) = box_accepted(photo_no) + 1;
@@ -274,6 +278,7 @@ for skin_threshold = 0.6
                 end
             end
             figure(photo_no);imshow(grey_face_photo,[]);
+            imwrite(grey_face_photo/255,['outputs',s, face_photos(photo_no).name],'png');
         end
         errors =  zeros(size(face_photos));
         for photo_no = 1:size(box_accepted)
@@ -289,7 +294,9 @@ for skin_threshold = 0.6
         error_rates(row_counter,1) = skin_threshold;
         error_rates(row_counter,2) = skin_percentage;
         error_rates(row_counter,3) = sum(errors);
-        row_counter = row_counter + 1;
+%         row_counter = row_counter + 1;
     end
 end
+%% 
+save()
 

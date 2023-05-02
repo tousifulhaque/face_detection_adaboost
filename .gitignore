@@ -5,4 +5,5 @@ training_nonface.mat
 zaeed.asv
 *.asv
 *.mat
+/outputs
 
